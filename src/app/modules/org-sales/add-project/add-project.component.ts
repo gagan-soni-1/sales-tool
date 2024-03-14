@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { PROJECTS } from '../projects/projects';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { EMPLOYEES } from '../../../shared/components/employees/employees';
 @Component({
   selector: 'app-add-project',
@@ -27,14 +27,26 @@ export class AddProjectComponent {
   
   addProject(e: any) {
     e.preventDefault();
-    PROJECTS.push(this.projectForm.value)
-    this.projectForm.reset()
+    // PROJECTS.push(this.projectForm.value)
+    // this.projectForm.reset()
+
+    console.log(this.projectForm.value)
   }
 
   get employee(){
-    return this.fb.group({})
+    return this.fb.group({
+      name:[''],
+      salary:['']
+    })
   }
 
+  get allEmployees() {
+    return this.projectForm.get('employees') as FormArray;
+  }
+
+  addAlias() {
+    this.allEmployees.push(this.employee);
+  }
 
 
   cancel() {
